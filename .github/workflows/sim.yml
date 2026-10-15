@@ -16,3 +16,29 @@ jobs:
           python-version: "3.12"
       - name: Pass path and blocked paths
         run: bash sim/test_scenarios.sh
+      - name: Golden transcripts match the committed files
+        run: |
+          bash sim/make_golden.sh
+          git diff --exit-code -- web/test/golden
+
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install, test, and build
+        working-directory: web
+        run: |
+          npm ci
+          npm test
+          npm run build
+      - name: Client output is self-contained and the gate matches every path
+        working-directory: web
+        run: node scripts/check-build.mjs

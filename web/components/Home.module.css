@@ -1,0 +1,59 @@
+.page {
+  box-sizing: border-box;
+  min-height: 100vh;
+  margin: 0;
+  padding: 10vh 8vw;
+  background: #0b1020;
+  color: #eef;
+  font-family: system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.page h1 {
+  margin: 0 0 2vh;
+  font-size: clamp(2.4rem, 7vh, 5rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.lede {
+  max-width: 46rem;
+  margin: 0 0 5vh;
+  color: #d5e2f2;
+  font-size: clamp(1.25rem, 3vh, 1.8rem);
+  line-height: 1.4;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.links a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 16rem;
+  min-height: 9rem;
+  padding: 1.5rem 1.75rem;
+  text-decoration: none;
+  color: #eef;
+  background: #1d2a4d;
+  border: 3px solid #4fa3ff;
+  border-radius: 16px;
+}
+
+.links a:focus-visible {
+  outline: 3px solid #ffe08a;
+  outline-offset: 4px;
+}
+
+.links strong {
+  font-size: clamp(1.8rem, 4vh, 2.6rem);
+}
+
+.links span {
+  margin-top: 0.6rem;
+  color: #c5d4ea;
+  font-size: clamp(1rem, 2.2vh, 1.25rem);
+}

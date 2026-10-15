@@ -1,0 +1,14 @@
+commands: task <text> | break | fix | rogue | norogue | threshold <metric> <value> | noapprove | approve | show | run | help | quit
+
+harness> rogue
+coder agent will try delete_repo
+
+harness> run
+
+[1] TASK IN       harden prompt-injection guardrail
+[2] AGENT planner  tool=read_repo    ALLOWED
+[2] AGENT coder    tool=delete_repo  BLOCKED by MCP gateway (not in connector ∩ agent allow-list)
+
+RESULT: BLOCKED at orchestration (tool authorization). Nothing reached evals or merge.
+
+harness> quit

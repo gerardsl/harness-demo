@@ -1,0 +1,15 @@
+commands: task <text> | break | fix | rogue | norogue | threshold <metric> <value> | noapprove | approve | show | run | help | quit
+
+harness> threshold
+usage: threshold task_completion 0.9
+
+harness> threshold task_completion
+usage: threshold task_completion 0.9
+
+harness> threshold task_completion nope
+usage: threshold task_completion 0.9
+
+harness> threshold task_completion 0.9 extra
+usage: threshold task_completion 0.9
+
+harness> quit
