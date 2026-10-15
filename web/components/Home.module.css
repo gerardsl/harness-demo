@@ -1,59 +1,198 @@
 .page {
-  box-sizing: border-box;
+  position: relative;
   min-height: 100vh;
-  margin: 0;
-  padding: 10vh 8vw;
-  background: #0b1020;
-  color: #eef;
-  font-family: system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+  padding: 0 48px 96px;
+  background: var(--color-canvas);
+  color: var(--color-ink);
 }
 
-.page h1 {
-  margin: 0 0 2vh;
-  font-size: clamp(2.4rem, 7vh, 5rem);
-  letter-spacing: -0.03em;
+.stack {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+}
+
+.wordmark {
+  font-family: var(--font-display-stack);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navLink {
+  color: var(--color-ink);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: var(--color-body);
+}
+
+.primary,
+.outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.primary {
+  padding: 10px 20px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.primary:hover,
+.primary:active {
+  background: var(--color-primary-active);
+  border-color: var(--color-primary-active);
+  color: var(--color-on-primary);
+}
+
+.outline {
+  padding: 9px 19px;
+  background: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-hairline-strong);
+}
+
+.outline:hover {
+  border-color: var(--color-ink);
+}
+
+.hero {
+  padding: 96px 0 8px;
+  text-align: center;
+}
+
+.hero h1 {
+  margin: 0 auto;
+  max-width: 14em;
+  font-size: 64px;
+  font-weight: 300;
   line-height: 1.05;
+  letter-spacing: -1.92px;
 }
 
 .lede {
-  max-width: 46rem;
-  margin: 0 0 5vh;
-  color: #d5e2f2;
-  font-size: clamp(1.25rem, 3vh, 1.8rem);
-  line-height: 1.4;
+  max-width: 38rem;
+  margin: 20px auto 0;
+  color: var(--color-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.16px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
 }
 
 .links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 80px;
 }
 
 .links a {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-width: 16rem;
-  min-height: 9rem;
-  padding: 1.5rem 1.75rem;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 0;
+  padding: 24px;
   text-decoration: none;
-  color: #eef;
-  background: #1d2a4d;
-  border: 3px solid #4fa3ff;
-  border-radius: 16px;
+  color: var(--color-ink);
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-xl);
 }
 
-.links a:focus-visible {
-  outline: 3px solid #ffe08a;
-  outline-offset: 4px;
+.links a:hover {
+  border-color: var(--color-hairline-strong);
+  box-shadow: var(--shadow-card);
 }
 
 .links strong {
-  font-size: clamp(1.8rem, 4vh, 2.6rem);
+  font-family: var(--font-sans-stack);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0;
 }
 
 .links span {
-  margin-top: 0.6rem;
-  color: #c5d4ea;
-  font-size: clamp(1rem, 2.2vh, 1.25rem);
+  color: var(--color-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.16px;
+}
+
+@media (max-width: 1024px) {
+  .hero h1 {
+    font-size: 48px;
+    letter-spacing: -0.96px;
+    line-height: 1.08;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 0 20px 64px;
+  }
+
+  .nav {
+    min-height: 64px;
+  }
+
+  .hero {
+    padding-top: 48px;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+    line-height: 1.13;
+    letter-spacing: -0.32px;
+  }
+
+  .links {
+    grid-template-columns: 1fr;
+    margin-top: 48px;
+  }
 }

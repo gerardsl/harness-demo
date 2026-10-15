@@ -1,92 +1,146 @@
 .screen {
+  position: relative;
   box-sizing: border-box;
   min-height: 100vh;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+.frame {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.25rem 1.5rem 1rem;
-  background: #07090f;
-  color: #e7ecf3;
-  font-family: system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+  gap: 16px;
+  width: min(1200px, 100%);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 8px 48px 32px;
 }
 
 .header {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem 1.25rem;
-  align-items: baseline;
+  gap: 12px 20px;
+  align-items: center;
+  min-height: 64px;
 }
 
 .header h1 {
   margin: 0;
-  font-size: clamp(1.6rem, 3vh, 2.2rem);
-  letter-spacing: -0.02em;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1.13;
+  letter-spacing: -0.32px;
 }
 
 .header p {
   margin: 0;
-  color: #9aabbf;
-  font-size: 1rem;
+  flex: 1 1 16rem;
+  color: var(--color-muted);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.47;
+  letter-spacing: 0.15px;
 }
 
 .header a {
-  color: #9cf;
-  font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 9px 19px;
+  border: 1px solid var(--color-hairline-strong);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-ink);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
   text-decoration: none;
+}
+
+.header a:hover {
+  border-color: var(--color-ink);
 }
 
 .toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 8px;
   align-items: center;
 }
 
 .toolbar button,
 .picker select {
-  font: inherit;
-  font-size: 1.05rem;
-  border-radius: 10px;
-  border: 3px solid #4fa3ff;
-  background: #141c2e;
-  color: #eef;
-  padding: 0.55rem 0.9rem;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
   cursor: pointer;
 }
 
+.toolbar button {
+  padding: 10px 20px;
+  border: 1px solid var(--color-hairline-strong);
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.toolbar button:hover {
+  border-color: var(--color-ink);
+}
+
 .toolbar button.good {
-  border-color: #3ddc84;
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
 }
 
-.toolbar button.bad {
-  border-color: #ff5c5c;
+.toolbar button.good:hover,
+.toolbar button.good:active {
+  border-color: var(--color-primary-active);
+  background: var(--color-primary-active);
 }
 
+.toolbar button.bad,
 .toolbar button.neutral {
-  border-color: #8aa0bd;
-}
-
-.toolbar button:focus-visible,
-.picker select:focus-visible,
-.header a:focus-visible,
-.prompt input:focus-visible {
-  outline: 3px solid #ffe08a;
-  outline-offset: 2px;
+  background: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-hairline-strong);
 }
 
 .picker {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  color: #c5d4ea;
-  font-size: 1rem;
+  gap: 8px;
+  color: var(--color-muted);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.picker select {
+  padding: 0 16px;
+  border: 1px solid var(--color-hairline-strong);
+  background: var(--color-surface-card);
+  color: var(--color-ink);
+}
+
+.picker select:focus-visible {
+  border-color: var(--color-ink);
 }
 
 .status {
   margin: 0;
-  color: #9aabbf;
-  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
-  font-size: 0.95rem;
+  color: var(--color-muted);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
 }
 
 .log {
@@ -94,50 +148,84 @@
   min-height: 50vh;
   overflow: auto;
   margin: 0;
-  padding: 1rem 1.1rem;
-  background: #0c1118;
-  border: 2px solid #243044;
-  border-radius: 12px;
-  color: #d7dee8;
+  padding: 24px;
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-xl);
+  color: var(--color-body-strong);
   font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
-  font-size: clamp(1.5rem, 2.8vh, 1.85rem);
-  line-height: 1.45;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
 }
 
 .line {
-  min-height: 1.45em;
+  min-height: 1.5em;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 
-.ok {
-  color: #3ddc84;
+.line.ok {
+  color: var(--color-success);
 }
 
-.bad {
-  color: #ff5c5c;
+.line.bad {
+  color: var(--color-error);
 }
 
 .prompt {
   display: flex;
-  gap: 0.75rem;
+  gap: 12px;
   align-items: center;
 }
 
 .prompt label {
-  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
-  font-size: clamp(1.5rem, 2.8vh, 1.85rem);
-  color: #7dcea0;
+  color: var(--color-muted);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
 }
 
 .prompt input {
   flex: 1;
   min-width: 0;
+  height: 44px;
+  padding: 12px 16px;
+  color: var(--color-ink);
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-hairline-strong);
+  border-radius: var(--radius-md);
   font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
-  font-size: clamp(1.5rem, 2.8vh, 1.85rem);
-  color: #eef;
-  background: #0c1118;
-  border: 2px solid #243044;
-  border-radius: 10px;
-  padding: 0.7rem 0.85rem;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.prompt input:focus {
+  outline: none;
+  border: 2px solid var(--color-ink);
+  padding: 11px 15px;
+}
+
+@media (max-width: 640px) {
+  .frame {
+    gap: 12px;
+    padding: 4px 20px 20px;
+  }
+
+  .header h1 {
+    font-size: 32px;
+  }
+
+  .log {
+    min-height: 42vh;
+    padding: 16px;
+    font-size: 14px;
+  }
+
+  .toolbar button,
+  .picker select {
+    padding-inline: 14px;
+  }
 }
