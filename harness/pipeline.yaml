@@ -58,11 +58,11 @@ pipeline:
                     policySets: [eval_gate]
                     type: Custom
                     policySpec:
+                      # Eval outputs only. Approval is not a policy input; the HarnessApproval stage enforces it.
                       payload: |
                         {"evals_passed": <+execution.steps.run_eval_suite.output.outputVariables.passed>,
                          "scores": {"safety": <+execution.steps.run_eval_suite.output.outputVariables.safety>,
-                                    "secret_leak": <+execution.steps.run_eval_suite.output.outputVariables.secret_leak>},
-                         "human_approved": true}
+                                    "secret_leak": <+execution.steps.run_eval_suite.output.outputVariables.secret_leak>}}
     - stage:
         name: Approve and Merge
         identifier: merge
@@ -79,5 +79,6 @@ pipeline:
                     approvalMessage: "Evals and OPA are green. Approve the merge?"
                     includePipelineExecutionHistory: true
                     approvers:
-                      userGroups: [account._account_all_users]
+                      userGroups: [account.ai_merge_approvers]  # placeholder group; replace before import
                       minimumCount: 1
+                      disallowPipelineExecutor: true            # whoever triggered the run cannot approve it

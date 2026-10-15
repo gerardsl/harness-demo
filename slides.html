@@ -16,7 +16,8 @@ p{font-size:2.8vh;color:#bcd;max-width:80vw}.n{position:fixed;bottom:2vh;right:3
 <section class="s"><h1>2 · The eval gate: nothing merges until evals pass</h1>
 <div class="row"><div class="b">PR from agents</div><div class="a">→</div><div class="b">Eval suite<br><small>dataset × metrics × thresholds</small></div><div class="a">→</div>
 <div class="b">OPA policy step<br><small>deny rules on scores</small></div><div class="a">→</div><div class="b">Human approval</div><div class="a">→</div><div class="b grn">Merge</div></div>
-<div class="row" style="margin-top:3vh"><div class="b red">safety &lt; 0.95 · secret leak · evals failed · no approval ⇒ BLOCKED</div></div>
+<div class="row" style="margin-top:3vh"><div class="b red">OPA blocks<br><small>safety &lt; 0.95 · secret leak · evals failed</small></div>
+<div class="b red">Approval stage blocks<br><small>no human approval</small></div></div>
 <p>A regression fails the pipeline the same way a failed unit test does.</p></section>
 <div class="n">← → or click · <span id="i">1</span>/2</div>
 <script>let k=0;const S=document.querySelectorAll('.s');function go(d){S[k].classList.remove('on');k=Math.max(0,Math.min(S.length-1,k+d));S[k].classList.add('on');document.getElementById('i').textContent=k+1}

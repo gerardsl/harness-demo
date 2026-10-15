@@ -19,6 +19,8 @@ An **eval suite** = dataset + metrics (faithfulness, safety, task completion, pr
 
 You can then pass the scores to a **Policy step** as a JSON payload. OPA evaluates them against Rego `deny` rules, and any deny stops the run. That separates *measuring* (evals) from *deciding* (policy owned by security). In the simulator, `run_evals()` scores 5 cases and `opa_policy()` mirrors `eval_gate.rego`.
 
+Human approval is not one of those rules. The HarnessApproval stage runs after the policy step and is the only place a missing approval blocks the merge. In the simulator, `approval_stage()` runs only after `opa_policy()` returns no denies.
+
 ## 3. Why it matters for agent security
 The coder agent's own report ("tests green") is not trusted. The merge decision rests on independent evals, policy-as-code and a human. This is defence in depth:
 1. The definition is checked at save time (OPA).
