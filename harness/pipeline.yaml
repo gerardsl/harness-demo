@@ -1,0 +1,84 @@
+# Harness pipeline: task in -> agents out -> review back -> eval gate -> OPA policy -> approval -> merge.
+# Policy and HarnessApproval steps follow the documented YAML. Steps marked ILLUSTRATIVE (Agent, AIEvals)
+# are newer features: confirm exact step type names in the step palette of a real account before importing.
+# The Policy step needs feature flag PIPE_IS_PRE_STEP_OPA_POLICY_EVALUATION_ENABLED (via Harness Support).
+pipeline:
+  name: agent-change-with-eval-gate
+  identifier: agent_change_with_eval_gate
+  projectIdentifier: <+input>
+  orgIdentifier: default
+  variables:
+    - name: task
+      type: String
+      value: <+input>
+  stages:
+    - stage:
+        name: Agents
+        identifier: agents
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:            # ILLUSTRATIVE: Worker Agent writes the change and opens a PR
+                  name: coder_agent
+                  identifier: coder_agent
+                  type: Agent
+                  spec:
+                    agent: harness.autofix@1.2
+                    prompt: <+pipeline.variables.task>
+                    allowedTools: [read_repo, write_branch, open_pr]   # gateway allows connector ∩ agent only
+              - step:            # ILLUSTRATIVE: reviewer agent reads the diff (review back)
+                  name: reviewer_agent
+                  identifier: reviewer_agent
+                  type: Agent
+                  spec:
+                    agent: code-review
+                    allowedTools: [read_repo]
+    - stage:
+        name: Eval Gate
+        identifier: eval_gate
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:            # ILLUSTRATIVE: AI Evals suite, blocking pass strategy
+                  name: run_eval_suite
+                  identifier: run_eval_suite
+                  type: AIEvals
+                  spec:
+                    suite: guardrail-regression
+                    passStrategy: blocking
+                    thresholds: {safety: 0.95, task_completion: 0.75}
+              - step:            # Documented: Policy step, Custom entity type, On Step policy set
+                  name: opa_eval_gate
+                  identifier: opa_eval_gate
+                  type: Policy
+                  timeout: 5m
+                  spec:
+                    policySets: [eval_gate]
+                    type: Custom
+                    policySpec:
+                      # Eval outputs only. Approval is not a policy input; the HarnessApproval stage enforces it.
+                      payload: |
+                        {"evals_passed": <+execution.steps.run_eval_suite.output.outputVariables.passed>,
+                         "scores": {"safety": <+execution.steps.run_eval_suite.output.outputVariables.safety>,
+                                    "secret_leak": <+execution.steps.run_eval_suite.output.outputVariables.secret_leak>}}
+    - stage:
+        name: Approve and Merge
+        identifier: merge
+        type: Approval
+        spec:
+          execution:
+            steps:
+              - step:
+                  name: human_approval
+                  identifier: human_approval
+                  type: HarnessApproval
+                  timeout: 1d
+                  spec:
+                    approvalMessage: "Evals and OPA are green. Approve the merge?"
+                    includePipelineExecutionHistory: true
+                    approvers:
+                      userGroups: [account.ai_merge_approvers]  # placeholder group; replace before import
+                      minimumCount: 1
+                      disallowPipelineExecutor: true            # whoever triggered the run cannot approve it
