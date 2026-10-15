@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { Atmosphere } from "./Atmosphere";
 import styles from "./Slides.module.css";
 
 const SLIDES = [
@@ -109,17 +110,20 @@ export function Slides() {
 
   return (
     <div className={styles.deck}>
-      <a className={styles.home} href="/" onClick={(event) => event.stopPropagation()}>
-        Home
-      </a>
+      <Atmosphere />
       <section
         className={styles.slide}
         aria-roledescription="slide"
         aria-label={slide.title}
         onClick={() => go(1)}
       >
-        <h1>{slide.title}</h1>
-        {slide.body}
+        <div className={styles.column}>
+          <a className={styles.home} href="/" onClick={(event) => event.stopPropagation()}>
+            Home
+          </a>
+          <h1>{slide.title}</h1>
+          {slide.body}
+        </div>
       </section>
       <p className={styles.counter} role="status">
         <span className={styles.hint}>← → · space · page up / down · click</span>
