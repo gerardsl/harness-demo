@@ -1,0 +1,9 @@
+commands: task <text> | break | fix | rogue | norogue | threshold <metric> <value> | noapprove | approve | show | run | help | quit
+
+harness> wat
+commands: task <text> | break | fix | rogue | norogue | threshold <metric> <value> | noapprove | approve | show | run | help | quit
+
+harness> help
+commands: task <text> | break | fix | rogue | norogue | threshold <metric> <value> | noapprove | approve | show | run | help | quit
+
+harness> quit

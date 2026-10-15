@@ -1,0 +1,9 @@
+audience 0
+bad-threshold 0
+break-eval 1
+no-approval 1
+pass 0
+rogue 0
+rogue-tool 1
+show 0
+unknown-command 0

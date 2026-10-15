@@ -1,0 +1,13 @@
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+web/node_modules/
+web/.next/
+web/out/
+web/.env
+web/.env.*
+!web/.env.example
