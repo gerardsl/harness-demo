@@ -1,6 +1,6 @@
 # Runbook: Harness agents + eval gate (30 min)
 
-Setup (before you start): `git clone https://github.com/gerardsl/harness-demo && cd harness-demo && git checkout nightly`, then Python 3.9+. No account, network or secrets needed. Open `slides.html` in a browser (arrow keys move between slides). Use a terminal font of at least 18 pt.
+Setup (before you start): `git clone https://github.com/gerardsl/harness-demo && cd harness-demo && git checkout nightly`, then Python 3.9+. No account, network or secrets needed. Open `slides.html` in a browser (arrow keys move between slides). Use a terminal font of at least 18 pt. Web version: sign in at the site with the passcode BEFORE going on stage. The session cookie lasts 8 hours and signed-in sessions are never rate-limited, but 20 wrong guesses from anyone lock new sign-ins for 10 minutes.
 
 | Time | Show | Command | Say |
 |---|---|---|---|
@@ -19,6 +19,7 @@ Audience notes
 - Approvers are the placeholder group `account.ai_merge_approvers`. `disallowPipelineExecutor: true` means whoever triggered the run cannot approve it.
 
 Fallbacks
+- Web version: sign in at the site with the passcode BEFORE going on stage. The session cookie lasts 8 hours and signed-in sessions are never rate-limited, but 20 wrong guesses from anyone lock new sign-ins for 10 minutes.
 - No colours or an odd terminal: `NO_COLOR=1 python3 ...`.
 - Interactive mode won't take input: `printf 'run\nbreak\nrun\nquit\n' | python3 sim/harness_sim.py`.
 - No Python on the laptop: show the green CI run on the PR page.
