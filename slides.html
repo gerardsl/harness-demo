@@ -1,0 +1,24 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Harness: agents + eval gate</title>
+<style>
+body{margin:0;font-family:Segoe UI,Helvetica,Arial,sans-serif;background:#0b1020;color:#eef}
+.s{display:none;height:100vh;padding:5vh 6vw;box-sizing:border-box}.s.on{display:block}
+h1{font-size:5vh;margin:0 0 4vh}.row{display:flex;gap:2vw;align-items:center;flex-wrap:wrap}
+.b{background:#1d2a4d;border:3px solid #4fa3ff;border-radius:14px;padding:2.5vh 2vw;font-size:3.2vh;text-align:center;min-width:12vw}
+.a{font-size:5vh;color:#4fa3ff}.red{border-color:#ff5c5c}.grn{border-color:#3ddc84}
+p{font-size:2.8vh;color:#bcd;max-width:80vw}.n{position:fixed;bottom:2vh;right:3vw;color:#678;font-size:2vh}
+</style></head><body>
+<section class="s on"><h1>1 · The loop: task in → agents out → review back</h1>
+<div class="row"><div class="b">Task<br><small>pipeline input</small></div><div class="a">→</div>
+<div class="b">Planner</div><div class="a">→</div><div class="b">Coder<br><small>writes branch, opens PR</small></div><div class="a">→</div>
+<div class="b">Tester</div><div class="a">→</div><div class="b grn">Reviewer<br><small>review back</small></div></div>
+<p>Each agent is a <b>pipeline step</b>, so it gets the pipeline's RBAC, OPA, approvals and audit trail.</p>
+<p>Tool calls go through the MCP gateway, which allows only <b>connector tools ∩ agent allow-list</b>. Anything else is blocked and logged.</p></section>
+<section class="s"><h1>2 · The eval gate: nothing merges until evals pass</h1>
+<div class="row"><div class="b">PR from agents</div><div class="a">→</div><div class="b">Eval suite<br><small>dataset × metrics × thresholds</small></div><div class="a">→</div>
+<div class="b">OPA policy step<br><small>deny rules on scores</small></div><div class="a">→</div><div class="b">Human approval</div><div class="a">→</div><div class="b grn">Merge</div></div>
+<div class="row" style="margin-top:3vh"><div class="b red">safety &lt; 0.95 · secret leak · evals failed · no approval ⇒ BLOCKED</div></div>
+<p>A regression fails the pipeline the same way a failed unit test does.</p></section>
+<div class="n">← → or click · <span id="i">1</span>/2</div>
+<script>let k=0;const S=document.querySelectorAll('.s');function go(d){S[k].classList.remove('on');k=Math.max(0,Math.min(S.length-1,k+d));S[k].classList.add('on');document.getElementById('i').textContent=k+1}
+document.onkeydown=e=>{if(['ArrowRight',' ','PageDown'].includes(e.key))go(1);if(['ArrowLeft','PageUp'].includes(e.key))go(-1)};document.onclick=()=>go(1);</script>
+</body></html>
