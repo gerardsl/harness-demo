@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { HELP, createSession, runScenario } from "../lib/sim";
+import { Atmosphere } from "./Atmosphere";
 import styles from "./Terminal.module.css";
 import { lineTone } from "./tone";
 
@@ -114,100 +115,103 @@ export function Terminal() {
 
   return (
     <div className={styles.screen}>
-      <header className={styles.header}>
-        <a href="/">Home</a>
-        <h1>Terminal</h1>
-        <p>One session per page load. Buttons call the same exec path as typing.</p>
-      </header>
+      <Atmosphere />
+      <div className={styles.frame}>
+        <header className={styles.header}>
+          <a href="/">Home</a>
+          <h1>Terminal</h1>
+          <p>One session per page load. Buttons call the same exec path as typing.</p>
+        </header>
 
-      <div className={styles.toolbar} role="toolbar" aria-label="Simulator commands">
-        {COMMANDS.map((item) => (
-          <button
-            key={item.cmd}
-            type="button"
-            className={item.tone === "good" ? styles.good : styles.bad}
-            aria-label={item.label}
-            onClick={() => submit(item.cmd)}
-          >
-            {item.cmd}
+        <div className={styles.toolbar} role="toolbar" aria-label="Simulator commands">
+          {COMMANDS.map((item) => (
+            <button
+              key={item.cmd}
+              type="button"
+              className={item.tone === "good" ? styles.good : styles.bad}
+              aria-label={item.label}
+              onClick={() => submit(item.cmd)}
+            >
+              {item.cmd}
+            </button>
+          ))}
+          <button type="button" className={styles.neutral} aria-label="Reset session" onClick={reset}>
+            reset
           </button>
-        ))}
-        <button type="button" className={styles.neutral} aria-label="Reset session" onClick={reset}>
-          reset
-        </button>
-        <label className={styles.picker} htmlFor="scenario">
-          Scenario
-          <select
-            id="scenario"
-            aria-label="Scenario"
-            value={scenarioName}
-            onChange={(event) => setScenarioName(event.target.value as ScenarioName)}
+          <label className={styles.picker} htmlFor="scenario">
+            Scenario
+            <select
+              id="scenario"
+              aria-label="Scenario"
+              value={scenarioName}
+              onChange={(event) => setScenarioName(event.target.value as ScenarioName)}
+            >
+              {SCENARIOS.map((name) => (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="button"
+            className={styles.neutral}
+            aria-label="Run scenario"
+            onClick={() => {
+              const result = runScenario(scenarioName);
+              setModel((prev) => ({
+                ...prev,
+                scenario: { name: scenarioName, lines: result.lines, exitCode: result.exitCode },
+              }));
+            }}
           >
-            {SCENARIOS.map((name) => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <button
-          type="button"
-          className={styles.neutral}
-          aria-label="Run scenario"
-          onClick={() => {
-            const result = runScenario(scenarioName);
-            setModel((prev) => ({
-              ...prev,
-              scenario: { name: scenarioName, lines: result.lines, exitCode: result.exitCode },
-            }));
-          }}
+            run scenario
+          </button>
+        </div>
+
+        <p className={styles.status} role="status">
+          {scenario ? `scenario ${scenario.name} · exit ${scenario.exitCode}` : "interactive session"}
+        </p>
+
+        <div
+          ref={logRef}
+          className={styles.log}
+          role="log"
+          aria-live="polite"
+          aria-relevant="additions"
+          aria-label="Simulator output"
         >
-          run scenario
-        </button>
+          {shown.map((line, index) => {
+            const tone = lineTone(line);
+            const className = tone === "plain" ? styles.line : `${styles.line} ${styles[tone]}`;
+            return (
+              <div key={index} data-testid="term-line" data-tone={tone} className={className}>
+                {line}
+              </div>
+            );
+          })}
+        </div>
+
+        <form className={styles.prompt} onSubmit={onSubmit}>
+          <label htmlFor="command">Command</label>
+          <input
+            ref={inputRef}
+            id="command"
+            name="command"
+            aria-label="Command"
+            value={draft}
+            spellCheck={false}
+            autoCapitalize="off"
+            autoCorrect="off"
+            autoComplete="off"
+            onChange={(event) => {
+              const value = event.target.value;
+              setModel((prev) => ({ ...prev, draft: value, cursor: -1 }));
+            }}
+            onKeyDown={onInputKeyDown}
+          />
+        </form>
       </div>
-
-      <p className={styles.status} role="status">
-        {scenario ? `scenario ${scenario.name} · exit ${scenario.exitCode}` : "interactive session"}
-      </p>
-
-      <div
-        ref={logRef}
-        className={styles.log}
-        role="log"
-        aria-live="polite"
-        aria-relevant="additions"
-        aria-label="Simulator output"
-      >
-        {shown.map((line, index) => {
-          const tone = lineTone(line);
-          const className = tone === "plain" ? styles.line : `${styles.line} ${styles[tone]}`;
-          return (
-            <div key={index} data-testid="term-line" data-tone={tone} className={className}>
-              {line}
-            </div>
-          );
-        })}
-      </div>
-
-      <form className={styles.prompt} onSubmit={onSubmit}>
-        <label htmlFor="command">Command</label>
-        <input
-          ref={inputRef}
-          id="command"
-          name="command"
-          aria-label="Command"
-          value={draft}
-          spellCheck={false}
-          autoCapitalize="off"
-          autoCorrect="off"
-          autoComplete="off"
-          onChange={(event) => {
-            const value = event.target.value;
-            setModel((prev) => ({ ...prev, draft: value, cursor: -1 }));
-          }}
-          onKeyDown={onInputKeyDown}
-        />
-      </form>
     </div>
   );
 }
