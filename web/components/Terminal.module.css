@@ -1,0 +1,143 @@
+.screen {
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem 1rem;
+  background: #07090f;
+  color: #e7ecf3;
+  font-family: system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: baseline;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vh, 2.2rem);
+  letter-spacing: -0.02em;
+}
+
+.header p {
+  margin: 0;
+  color: #9aabbf;
+  font-size: 1rem;
+}
+
+.header a {
+  color: #9cf;
+  font-size: 1.05rem;
+  text-decoration: none;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.toolbar button,
+.picker select {
+  font: inherit;
+  font-size: 1.05rem;
+  border-radius: 10px;
+  border: 3px solid #4fa3ff;
+  background: #141c2e;
+  color: #eef;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+}
+
+.toolbar button.good {
+  border-color: #3ddc84;
+}
+
+.toolbar button.bad {
+  border-color: #ff5c5c;
+}
+
+.toolbar button.neutral {
+  border-color: #8aa0bd;
+}
+
+.toolbar button:focus-visible,
+.picker select:focus-visible,
+.header a:focus-visible,
+.prompt input:focus-visible {
+  outline: 3px solid #ffe08a;
+  outline-offset: 2px;
+}
+
+.picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #c5d4ea;
+  font-size: 1rem;
+}
+
+.status {
+  margin: 0;
+  color: #9aabbf;
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+  font-size: 0.95rem;
+}
+
+.log {
+  flex: 1;
+  min-height: 50vh;
+  overflow: auto;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  background: #0c1118;
+  border: 2px solid #243044;
+  border-radius: 12px;
+  color: #d7dee8;
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+  font-size: clamp(1.5rem, 2.8vh, 1.85rem);
+  line-height: 1.45;
+}
+
+.line {
+  min-height: 1.45em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ok {
+  color: #3ddc84;
+}
+
+.bad {
+  color: #ff5c5c;
+}
+
+.prompt {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.prompt label {
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+  font-size: clamp(1.5rem, 2.8vh, 1.85rem);
+  color: #7dcea0;
+}
+
+.prompt input {
+  flex: 1;
+  min-width: 0;
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+  font-size: clamp(1.5rem, 2.8vh, 1.85rem);
+  color: #eef;
+  background: #0c1118;
+  border: 2px solid #243044;
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem;
+}

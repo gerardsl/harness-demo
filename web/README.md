@@ -1,6 +1,6 @@
 # Harness demo web
 
-Next.js app (App Router) for the static demo. The Python simulator in `../sim` stays the reference. `lib/sim` is the TypeScript port, and `middleware.ts` is the only server entry: an Edge passcode gate. Slides, the terminal page, and buttons are left for the UI pass on this branch.
+Next.js app (App Router) for the static demo. The Python simulator in `../sim` stays the reference. `lib/sim` is the TypeScript port, and `middleware.ts` is the only server entry: an Edge passcode gate. `/` links to the slides at `/slides` and the terminal at `/terminal`.
 
 Set the Vercel project root to `web`. Do not commit secret values.
 

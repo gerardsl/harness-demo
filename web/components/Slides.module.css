@@ -1,0 +1,106 @@
+.deck {
+  min-height: 100vh;
+  margin: 0;
+  background: #0b1020;
+  color: #eef;
+  font-family: system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.home {
+  position: fixed;
+  top: 2vh;
+  left: 2vw;
+  z-index: 2;
+  color: #9cf;
+  font-size: clamp(1rem, 2.2vh, 1.4rem);
+  text-decoration: none;
+}
+
+.home:focus-visible {
+  outline: 3px solid #4fa3ff;
+  outline-offset: 3px;
+}
+
+.slide {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 8vh 6vw 10vh;
+  cursor: pointer;
+}
+
+.slide h1 {
+  margin: 0 0 4vh;
+  max-width: 92vw;
+  font-size: clamp(1.8rem, 5.2vh, 4.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.row {
+  display: flex;
+  gap: 1.6vw;
+  align-items: stretch;
+  flex-wrap: wrap;
+  margin-bottom: 3vh;
+}
+
+.box {
+  background: #1d2a4d;
+  border: 3px solid #4fa3ff;
+  border-radius: 14px;
+  padding: 2.2vh 1.6vw;
+  font-size: clamp(1.25rem, 3.4vh, 2.4rem);
+  font-weight: 700;
+  text-align: center;
+  min-width: 11vw;
+  line-height: 1.2;
+}
+
+.box small {
+  display: block;
+  margin-top: 0.6vh;
+  color: #c5d4ea;
+  font-size: 0.62em;
+  font-weight: 500;
+}
+
+.arrow {
+  align-self: center;
+  color: #4fa3ff;
+  font-size: clamp(1.8rem, 5vh, 3.4rem);
+  font-weight: 700;
+}
+
+.good {
+  border-color: #3ddc84;
+}
+
+.bad {
+  border-color: #ff5c5c;
+}
+
+.slide p {
+  margin: 0 0 2vh;
+  max-width: 84vw;
+  color: #d5e2f2;
+  font-size: clamp(1.2rem, 3vh, 2.15rem);
+  line-height: 1.35;
+}
+
+.counter {
+  position: fixed;
+  right: 3vw;
+  bottom: 2vh;
+  display: flex;
+  gap: 1.5rem;
+  align-items: baseline;
+  margin: 0;
+  color: #9ab;
+  font-size: clamp(1rem, 2.4vh, 1.6rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.hint {
+  color: #7e93ad;
+}
